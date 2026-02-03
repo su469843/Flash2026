@@ -94,7 +94,18 @@
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
 | `OPENROUTER_API_KEY` | OpenRouter API key | Yes | None |
+| `OPENROUTER_MODEL` | AI model to use (see available models at openrouter.ai/docs#models) | No | `anthropic/claude-3-haiku-20240307` |
 | `VITE_API_URL` | API endpoint URL | No | `/api/wish` |
+
+### Available Models
+You can use any model from OpenRouter's model list. Popular options:
+- `anthropic/claude-3-haiku-20240307` - Fast, economical (default)
+- `anthropic/claude-3.5-sonnet-20241022` - More capable, slightly more expensive
+- `openai/gpt-4o-mini` - OpenAI's efficient model
+- `google/gemini-pro` - Google's Gemini model
+- `meta-llama/llama-3.1-8b-instruct` - Open source option
+
+See the full list at: https://openrouter.ai/docs#models
 
 ## Costs
 

@@ -38,6 +38,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
+    const model = process.env.OPENROUTER_MODEL || 'anthropic/claude-3-haiku-20240307';
+    
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -47,7 +49,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         'X-Title': 'Lunar Glow 2025'
       },
       body: JSON.stringify({
-        model: 'anthropic/claude-3-haiku-20240307',
+        model: model,
         messages: [{
           role: 'user',
           content: `User request: "${prompt}".
