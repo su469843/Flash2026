@@ -1,41 +1,35 @@
 
-import { GoogleGenAI, Type } from "@google/genai";
-import { WishResponse } from "../types";
+import { WishResponse } from "./types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
+const API_URL = import.meta.env.VITE_API_URL || '/api/wish';
 
 export const generateNewYearWish = async (prompt: string): Promise<WishResponse> => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `User request: "${prompt}". 
-      Generate a poetic and inspiring New Year message. Adhere strictly to the requested language in the prompt.
-      Also provide a matching visual theme name and 3-5 hex colors that match this specific vibe for fireworks.`,
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: Type.OBJECT,
-          properties: {
-            message: { type: Type.STRING },
-            theme: { type: Type.STRING },
-            colors: {
-              type: Type.ARRAY,
-              items: { type: Type.STRING }
-            }
-          },
-          required: ["message", "theme", "colors"]
-        }
-      }
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt,
+        language: prompt.includes('(Reply in Chinese)') ? 'zh' : 'en'
+      })
     });
 
-    const text = response.text;
-    if (!text) throw new Error("No response from AI");
-    return JSON.parse(text);
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("API Error:", error);
+    const isZh = prompt.includes('(Reply in Chinese)');
     return {
-      message: "May the light of the new year bring you joy and prosperity! ✨",
-      theme: "Classic Celebration",
+      message: isZh 
+        ? "愿新年的光芒为你带来喜悦与繁荣！✨" 
+        : "May the light of the new year bring you joy and prosperity! ✨",
+      theme: isZh ? "经典庆典" : "Classic Celebration",
       colors: ["#ff0000", "#ffd700", "#ffffff", "#ff4500"]
     };
   }

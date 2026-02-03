@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import FireworkEngine, { FireworkEngineHandle } from './components/FireworkEngine';
-import { generateNewYearWish } from './services/geminiService';
+import FireworkEngine, { FireworkEngineHandle } from './FireworkEngine';
+import { generateNewYearWish } from './geminiService';
 import { WishResponse, FireworkType } from './types';
 
 const UI_STRINGS = {
