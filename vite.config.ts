@@ -8,11 +8,21 @@ export default defineConfig(({ mode }) => {
       server: {
         port: 3000,
         host: '0.0.0.0',
+        // Proxy API requests in development
+        proxy: {
+          '/api': {
+            target: 'http://localhost:3000',
+            bypass: (req) => {
+              // In development, Vercel handles API routes separately
+              // This ensures the requests are handled properly
+              return req.url;
+            }
+          }
+        }
       },
       plugins: [react()],
       define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        'process.env': {}
       },
       resolve: {
         alias: {

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
-import { FireworkType, Particle } from '../types';
+import { FireworkType, Particle } from './types';
 
 interface FireworkEngineProps {
   colors?: string[];
