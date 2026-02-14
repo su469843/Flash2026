@@ -60,7 +60,7 @@ const App: React.FC = () => {
     if (!userInput.trim()) return;
 
     setLoading(true);
-    const result = await generateNewYearWish(`${userInput} (Reply in ${lang === 'zh' ? 'Chinese' : 'English'})`);
+    const result = await generateNewYearWish(userInput, lang);
     setWish(result);
     setLoading(false);
     setShowForm(false);
