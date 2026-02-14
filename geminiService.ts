@@ -1,7 +1,7 @@
 import { WishResponse } from "./types";
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const DEFAULT_MODEL = 'anthropic/claude-3-haiku-20240307';
+const DEFAULT_MODEL = 'deepseek/deepseek-r1-0528:free';
 
 export const generateNewYearWish = async (prompt: string, language?: 'zh' | 'en'): Promise<WishResponse> => {
   const lang = language || (prompt.includes('(Reply in Chinese)') ? 'zh' : 'en');
